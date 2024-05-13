@@ -30,7 +30,7 @@ public class JwtProvider {
         //jwt 생성
         String jwt = Jwts.builder()
             //서명 알고리즘과 비밀키(서버측에서만 알아야함) 지정
-            .signWith(SignatureAlgorithm.ES256, secretKey)
+            .signWith(SignatureAlgorithm.HS256, secretKey)
             //JWT 주제 설정(이메일 주소로 주제 설정), 토큰의 발급시간 설정, 토큰의 만료시간 설정
             .setSubject(email).setIssuedAt(new Date()).setExpiration(expiredDate)
             //위에서 설정한 모든 내용을 기반으로 JWT 생성되고, 해당 JWT 문자열로 반환

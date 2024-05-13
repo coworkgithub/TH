@@ -5,7 +5,7 @@ public interface ResponseCode {
     String SUCCESS = "SU";  //성공
     //HTTP STATUS 400   
     String VALIDATION_FAILED = "VF";    //유효성 검증 실패
-    String DUPLICATE_EMAIL = "DF";      //중복된 이메일
+    String DUPLICATE_EMAIL = "DE";      //중복된 이메일
     String DUPLICATE_TEL_NUMBER = "DT"; //중복된 전화번호
     String DUPLICATE_NICKNAME = "DN";   //중복된 닉네임
     String NOT_EXISTED_USER = "NU";     //존재하지 않는 유저
