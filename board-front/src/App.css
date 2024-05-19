@@ -1,3 +1,8 @@
+.divider {
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+    width: 100%;
+}
+
 .black-button{
     border-radius: 46px;
     width: 95px;
@@ -165,3 +170,25 @@
     background-image: url(assets/image/check-ring-light.png);
 }
 
+.image-box-light-icon {
+    background-image: url(assets/image/image-box-light.png);
+}
+
+.close-icon {
+    background-image: url(assets/image/close.png);
+}
+
+.board-write-image-box {
+    width: 100%;
+    position: relative;
+}
+
+.board-write-image {
+    width: 100%;
+}
+
+.image-close {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
