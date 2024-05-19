@@ -6,10 +6,14 @@ import com.sugang.boardback.dto.object.FavoriteListItem;
 import com.sugang.boardback.dto.response.ResponseDto;
 import com.sugang.boardback.repository.resultSet.GetFavoriteListResultSet;
 
+import lombok.Getter;
+
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
+@Getter
 public class GetFavoriteListResponseDto extends ResponseDto{
     
     private List<FavoriteListItem> favoriteList;
