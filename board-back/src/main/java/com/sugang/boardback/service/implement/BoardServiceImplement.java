@@ -7,6 +7,7 @@ import com.sugang.boardback.dto.request.board.PostBoardRequestDto;
 import com.sugang.boardback.dto.request.board.PostCommentRequestDto;
 import com.sugang.boardback.dto.response.ResponseDto;
 import com.sugang.boardback.dto.response.board.GetBoardResponseDto;
+import com.sugang.boardback.dto.response.board.GetCommentListResponseDto;
 import com.sugang.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.sugang.boardback.dto.response.board.PostBoardResponseDto;
 import com.sugang.boardback.dto.response.board.PostCommentResponseDto;
@@ -21,6 +22,7 @@ import com.sugang.boardback.repository.FavoriteRepository;
 import com.sugang.boardback.repository.ImageRepository;
 import com.sugang.boardback.repository.UserRepository;
 import com.sugang.boardback.repository.resultSet.GetBoardResultSet;
+import com.sugang.boardback.repository.resultSet.GetCommentListResultSet;
 import com.sugang.boardback.repository.resultSet.GetFavoriteListResultSet;
 import com.sugang.boardback.service.BoardService;
 
@@ -76,6 +78,22 @@ public class BoardServiceImplement implements BoardService {
             return ResponseDto.databaseError();
         }
         return GetFavoriteListResponseDto.success(resultSets);
+    }
+
+    @Override
+    public ResponseEntity<? super GetCommentListResponseDto> getCommentList(Integer boardNumber) {
+        List<GetCommentListResultSet> resultSets = new ArrayList<>();
+        try {
+            boolean existedBoard = boardRepository.existsByBoardNumber(boardNumber);
+            if(!existedBoard) return GetCommentListResponseDto.noExistBoard();
+
+            resultSets = commentRepository.getCommentList(boardNumber);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetCommentListResponseDto.success(resultSets);
     }
 
     @Override
@@ -156,4 +174,5 @@ public class BoardServiceImplement implements BoardService {
         }
         return PutFavoriteResponseDto.success();
     }
+    
 }
