@@ -5,9 +5,9 @@ import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRIT
 import { useCookies } from 'react-cookie';
 import { useBoardStore, useLoginUserStore } from 'stores';
 import { fileUploadRequest, postBoardRequest } from 'apis';
-import { PostBoardRequestDto } from 'apis/request/board';
 import { PostBoardResponseDto } from 'apis/response/board';
 import { ResponseDto } from 'apis/response';
+import { PostBoardRequestDto } from 'apis/request/board';
 //          component : 헤더 레이아웃      //
 export default function Header() {
 
@@ -161,7 +161,7 @@ const UploadButton = () => {
     //          event handler : 업로드 버튼 클릭 이벤트 처리    //
     const onUploadButtonClickHandler = async () => {
 
-      const accessToken = cookies.accesToken;
+      const accessToken = cookies.accessToken;
       if (!accessToken) return;
   
       const boardImageList: string[] = [];

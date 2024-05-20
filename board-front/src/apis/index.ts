@@ -4,8 +4,8 @@ import { SignInResponseDto, SignUpResponseDto } from './response/auth';
 import { ResponseDto } from './response';
 import { GetSignInUserResponseDto } from './response/user';
 import { error } from 'console';
-import { PostBoardRequestDto } from './request/board';
 import { PostBoardResponseDto } from './response/board';
+import { PostBoardRequestDto } from './request/board';
 
 const DOMAIN = 'http://localhost:4000';
 

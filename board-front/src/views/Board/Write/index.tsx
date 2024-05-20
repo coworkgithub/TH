@@ -104,6 +104,7 @@ useEffect(() => {
   resetBoard();
 }, []);
 
+
 //    render: 게시물 작성 화면 컴포넌트 렌더링  //
   return (
     <div id='board-write-wrapper'>
