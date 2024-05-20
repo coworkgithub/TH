@@ -8,6 +8,8 @@ import com.sugang.boardback.entity.CommentEntity;
 import com.sugang.boardback.repository.resultSet.GetCommentListResultSet;
 
 import java.util.List;
+
+import javax.transaction.Transactional;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer>{
     
@@ -26,4 +28,7 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
         nativeQuery = true
     )
     List<GetCommentListResultSet> getCommentList(Integer boardNumber);
+
+    @Transactional
+    void deleteByBoardNumber (Integer boardNumber);
 }
