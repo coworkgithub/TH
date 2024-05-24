@@ -22,6 +22,7 @@ import com.sugang.boardback.dto.response.board.GetBoardResponseDto;
 import com.sugang.boardback.dto.response.board.GetCommentListResponseDto;
 import com.sugang.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.sugang.boardback.dto.response.board.GetLatestBoardListResponseDto;
+import com.sugang.boardback.dto.response.board.GetTop3BoardListResponseDto;
 import com.sugang.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.sugang.boardback.dto.response.board.PatchBoardResponseDto;
 import com.sugang.boardback.dto.response.board.PostBoardResponseDto;
@@ -72,6 +73,12 @@ public class BoardController {
     @GetMapping("/latest-list")
     public ResponseEntity<? super GetLatestBoardListResponseDto> getlatestBoardList(){
         ResponseEntity<? super GetLatestBoardListResponseDto> response = boardService.getLatestBoardList();
+        return response;
+    }
+
+    @GetMapping("/top-3")
+    public ResponseEntity<? super GetTop3BoardListResponseDto> getTop3BoardList(){
+        ResponseEntity<? super GetTop3BoardListResponseDto> response = boardService.getTop3BoardList();
         return response;
     }
 
