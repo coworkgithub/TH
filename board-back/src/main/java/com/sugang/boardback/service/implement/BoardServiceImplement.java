@@ -2,7 +2,6 @@ package com.sugang.boardback.service.implement;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PatchMapping;
 
 import com.sugang.boardback.dto.request.board.PatchBoardRequestDto;
 import com.sugang.boardback.dto.request.board.PostBoardRequestDto;
@@ -15,6 +14,7 @@ import com.sugang.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.sugang.boardback.dto.response.board.GetLatestBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.GetSearchBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.GetTop3BoardListResponseDto;
+import com.sugang.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.sugang.boardback.dto.response.board.PatchBoardResponseDto;
 import com.sugang.boardback.dto.response.board.PostBoardResponseDto;
@@ -156,14 +156,30 @@ public class BoardServiceImplement implements BoardService {
                 searchLogEntity = new SearchLogEntity(preSearchWord, searchWord, relation);
                 searchLogRepository.save(searchLogEntity);
             }
-
-
-
         } catch (Exception exception) {
             exception.printStackTrace();
             return ResponseDto.databaseError();
         }
         return GetSearchBoardListResponseDto.success(boardListViewEntities);
+    }
+
+    @Override
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(String email) {
+        
+        List<BoardListViewEntity> boardListViewEntities = new ArrayList<>();
+        
+        try {
+            boolean existedUser = userRepository.existsByEmail(email);
+            if(!existedUser) return GetUserBoardListResponseDto.noExistUser();
+
+            boardListViewEntities = boardListViewRepository.findByWriterEmailOrderByWriteDatetimeDesc(email);
+            
+        } catch (Exception exception) {
+            exception.printStackTrace();
+            return ResponseDto.databaseError();
+        }
+        return GetUserBoardListResponseDto.success(boardListViewEntities);
+        
     }
 
 
@@ -323,6 +339,5 @@ public class BoardServiceImplement implements BoardService {
         }
         return DeleteBoardResponseDto.success();
     }
-    
     
 }

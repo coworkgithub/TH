@@ -24,6 +24,7 @@ import com.sugang.boardback.dto.response.board.GetFavoriteListResponseDto;
 import com.sugang.boardback.dto.response.board.GetLatestBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.GetSearchBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.GetTop3BoardListResponseDto;
+import com.sugang.boardback.dto.response.board.GetUserBoardListResponseDto;
 import com.sugang.boardback.dto.response.board.IncreaseViewCountResponseDto;
 import com.sugang.boardback.dto.response.board.PatchBoardResponseDto;
 import com.sugang.boardback.dto.response.board.PostBoardResponseDto;
@@ -90,6 +91,14 @@ public class BoardController {
 
     ) {
         ResponseEntity<? super GetSearchBoardListResponseDto> response = boardService.getSearchBoardList(searchWord, preSearchWord);
+        return response;
+    }
+
+    @GetMapping("/user-board-list/{email}")
+    public ResponseEntity<? super GetUserBoardListResponseDto> getUserBoardList(
+        @PathVariable ("email") String email
+    ){
+        ResponseEntity<? super GetUserBoardListResponseDto> response = boardService.getUserBoardList(email);
         return response;
     }
 
