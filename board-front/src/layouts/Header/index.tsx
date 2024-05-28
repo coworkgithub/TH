@@ -4,10 +4,10 @@ import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
 import { useBoardStore, useLoginUserStore } from 'stores';
-import { fileUploadRequest, postBoardRequest } from 'apis';
-import { PostBoardResponseDto } from 'apis/response/board';
+import { PatchBoardRequest, fileUploadRequest, postBoardRequest } from 'apis';
+import { PatchBoardRequestDto, PostBoardRequestDto } from 'apis/request/board';
+import { PatchBoardResponseDto, PostBoardResponseDto } from 'apis/response/board';
 import { ResponseDto } from 'apis/response';
-import { PostBoardRequestDto } from 'apis/request/board';
 //          component : 헤더 레이아웃      //
 export default function Header() {
 
@@ -115,7 +115,7 @@ const MyPageButton = () => {
     const {email} = loginUser;
     navigate(USER_PATH(email));
   };
-  //            event handler : 마이페이지 버튼 클릭 이벤트 처리 함수     //
+  //            event handler : 로그아웃 버튼 클릭 이벤트 처리 함수     //
   const onSignOutButtonClickHandler = () => {
     resetLoginUser();
     setCoookie('accessToken', '', {path:MAIN_PATH(), expires: new Date() })
@@ -140,46 +140,69 @@ const MyPageButton = () => {
 //          component : 업로드 버튼 컴포넌트    //
 const UploadButton = () => {
 
+  //    state: 게시물 번호 path variable 상태    //
+  const {boardNumber}= useParams();
+
   //          state : 게시물 상태             //
   const {title, content, boardImageFileList, resetBoard} = useBoardStore();
 
-    //    function: post board response 처리 함수    //
-    const postBoardResponse = (responseBody: PostBoardResponseDto | ResponseDto | null) => {
-      if (!responseBody) return;
-      const { code } = responseBody;
-      if (code === 'AF' || code === 'NU') navigate(AUTH_PATH());
-      if (code === 'VF') alert('제목과 내용은 필수입니다.');
-      if (code === 'DBE') alert('데이터베이스 오류입니다.');
-      if (code !== 'SU') return;
-  
-      resetBoard();
-      if (!loginUser) return;
-      const { email } =loginUser;
-      navigate(USER_PATH(email));
-    }
-  
-    //          event handler : 업로드 버튼 클릭 이벤트 처리    //
-    const onUploadButtonClickHandler = async () => {
+  //    function: post board response 처리 함수    //
+  const postBoardResponse = (responseBody: PostBoardResponseDto | ResponseDto | null) => {
+    if (!responseBody) return;
+    const { code } = responseBody;
+    if (code === 'AF' || code === 'NU') navigate(AUTH_PATH());
+    if (code === 'VF') alert('제목과 내용은 필수입니다.');
+    if (code === 'DBE') alert('데이터베이스 오류입니다.');
+    if (code !== 'SU') return;
 
-      const accessToken = cookies.accessToken;
-      if (!accessToken) return;
-  
-      const boardImageList: string[] = [];
-  
-      for (const file of boardImageFileList) {
-        const data = new FormData();
-        data.append('file', file);
-  
-        const url = await fileUploadRequest(data);
-        if (url) boardImageList.push(url);
-      }
-  
+    resetBoard();
+    if (!loginUser) return;
+    const { email } =loginUser;
+    navigate(USER_PATH(email));
+  }
+
+  //    function: patch board response 처리 함수    //
+  const PatchBoardResponse = (responseBody: PatchBoardResponseDto | ResponseDto | null) => {
+    if (!responseBody) return;
+    const { code } = responseBody;
+    if (code === 'AF' || code === 'NU' || code === 'NB' || code === 'NP') navigate(AUTH_PATH());
+    if (code === 'VF') alert('제목과 내용은 필수입니다.');
+    if (code === 'DBE') alert('데이터베이스 오류입니다.');
+    if (code !== 'SU') return;
+
+    if (!boardNumber) return;
+    navigate(BOARD_PATH() + '/' + BOARD_DETAIL_PATH(boardNumber));
+  }
+
+  //          event handler : 업로드 버튼 클릭 이벤트 처리    //
+  const onUploadButtonClickHandler = async () => {
+    const accessToken = cookies.accessToken;
+    if (!accessToken) return;
+
+    const boardImageList: string[] = [];
+
+    for (const file of boardImageFileList) {
+      const data = new FormData();
+      data.append('file', file);
+
+      const url = await fileUploadRequest(data);
+      if (url) boardImageList.push(url);
+    }
+
+    const isWriterPage = pathname === BOARD_PATH() + '/' + BOARD_WRITE_PATH(); 
+    if(isWriterPage) {
       const requestBody: PostBoardRequestDto = {
         title, content, boardImageList
       }
-  
       postBoardRequest(requestBody, accessToken).then(postBoardResponse);
+    } else {
+      if (!boardNumber) return;
+      const requestBody: PatchBoardRequestDto = {
+        title, content, boardImageList
+      }
+      PatchBoardRequest(boardNumber,requestBody, accessToken ).then(PatchBoardResponse);
     }
+  }
 
   //          render : 업로드 버튼 컴포넌트 렌더링     //
   if(title && content)
@@ -220,7 +243,7 @@ useEffect( ()=> {
           <div className='icon-box'> 
             <div className='icon logo-dark-icon'></div>
           </div>
-          <div className='header-logo'>{'Hoons board'}</div>
+          <div className='header-logo'>{'rêve:꿈'}</div>
         </div>
         <div className= 'header-right-box'>
           {(isAuthPage || isMainPage || isSearchPage || isBoardDetailPage) && <SearchButton />}
