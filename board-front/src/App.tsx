@@ -5,11 +5,12 @@ import Main from 'views/Main';
 import Authentication from 'views/Authentication';
 import Search from 'views/Search';
 import UserP from 'views/User';
+import UserSetting from 'views/UserOption';
 import BoardDetail from 'views/Board/Detail';
 import BoardWrite from 'views/Board/Write';
 import BoardUpdate from 'views/Board/Update';
 import Container from 'layouts/Container';
-import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH } from 'constant';
+import { AUTH_PATH, BOARD_DETAIL_PATH, BOARD_PATH, BOARD_UPDATE_PATH, BOARD_WRITE_PATH, MAIN_PATH, SEARCH_PATH, USER_PATH, USER_SETTING_PATH } from 'constant';
 import { useCookies } from 'react-cookie';
 import { useLoginUserStore } from 'stores';
 import { getSignInUserRequest } from 'apis';
@@ -52,6 +53,7 @@ useEffect (() => {
 //  description : 로그인 + 회원가입 화면 : '/auth' - Authentication     //
 //  description : 검색 화면 : '/search/:searchword' - Search     //
 //  description : 유저 페이지 : '/user/:userEmail' - User     //
+//  description : 유저 설정 페이지 : '/user/:userEmail/setting' - UserSetting     //
 //  description : 게시물 상세보기 : '/board/detail/:boardNumber' - BoardDetail     //
 //  description : 게시물 작성하기 : '/board/write' - BoardWrite     //
 //  description : 게시물 수정하기 : '/board/upate/:boardNumber' - BoardUpdate     //
@@ -62,6 +64,7 @@ useEffect (() => {
       <Route path={AUTH_PATH()} element={<Authentication/>} />
       <Route path= {SEARCH_PATH(`:searchWord`)} element={<Search />}/>
       <Route path= {USER_PATH(`:userEmail`)} element={<UserP />}/>
+      <Route path= {USER_SETTING_PATH(`:userEmail`)} element={<UserSetting />}/>
       <Route path= {BOARD_PATH()}>
          <Route path={BOARD_WRITE_PATH()} element={<BoardWrite />} />
          <Route path={BOARD_DETAIL_PATH(':boardNumber')} element={<BoardDetail />} /> 
