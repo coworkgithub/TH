@@ -36,6 +36,7 @@ export default function Main() {
       setTop3BoardList(top3List);
     }
 
+  
     //    effect: 첫 마운트 시 실행될 함수    //
     useEffect(()=> {
       getTop3BoardListRequest().then(getTop3BoardListResponse);
