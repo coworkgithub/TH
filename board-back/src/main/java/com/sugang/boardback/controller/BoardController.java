@@ -64,7 +64,7 @@ public class BoardController {
         return response;
     }
     
-    @PatchMapping("/{boardNumber}/increase-view-count")
+    @GetMapping("/{boardNumber}/increase-view-count")
     public ResponseEntity<? super IncreaseViewCountResponseDto> increaseViewCount(
         @PathVariable("boardNumber") Integer boardNumber
     ){
