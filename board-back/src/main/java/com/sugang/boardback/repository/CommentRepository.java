@@ -9,7 +9,7 @@ import com.sugang.boardback.repository.resultSet.GetCommentListResultSet;
 
 import java.util.List;
 
-import javax.transaction.Transactional;
+import jakarta.transaction.Transactional;
 @Repository
 public interface CommentRepository extends JpaRepository<CommentEntity, Integer>{
     
@@ -34,5 +34,5 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
     void deleteByBoardNumber (Integer boardNumber);
 
     @Transactional
-    void deleteByEmail (String email);
+    void deleteByUserEmail (String email);
 }
