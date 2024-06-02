@@ -31,4 +31,7 @@ public interface FavoriteRepository extends JpaRepository<FavoriteEntity, Favori
     
     @Transactional
     void deleteByBoardNumber (Integer boardNumber);
+
+    @Transactional
+    void deleteByUserEmail (String userEmail);
 }

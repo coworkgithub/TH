@@ -34,5 +34,5 @@ public interface CommentRepository extends JpaRepository<CommentEntity, Integer>
     void deleteByBoardNumber (Integer boardNumber);
 
     @Transactional
-    void deleteByUserEmail (String email);
+    void deleteByUserEmail (String userEmail);
 }

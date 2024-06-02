@@ -45,13 +45,13 @@ export default function UserSetting() {
 
       const response = await deleteUserRequest(loginUser.email, cookies.accessToken);
       if (response && response.code === 'SU') {
-          alert('회원 탈퇴가 완료되었습니다.');
+        alert('회원 탈퇴가 완료되었습니다.');
           // 로그아웃 처리
           resetLoginUser();
           setCookie('accessToken', '', {path:MAIN_PATH(), expires: new Date() })
           navigate(MAIN_PATH()); // 로그인 페이지로 리다이렉트 예제
       } else {
-          alert('회원 탈퇴 중 오류가 발생했습니다.');
+        alert('회원 탈퇴 중 오류가 발생했습니다.');
       }
   };
 
